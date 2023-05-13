@@ -1,47 +1,100 @@
-@import url("https://fonts.googleapis.com/css?family=Lato:400,700");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caladea:wght@400;700&display=swap");
 
-$font: "Lato", sans-serif;
+// $font: "Lato", sans-serif;
 
-$primary: #79c7c5;
-$secondary: #a1e2d9;
-$white: #f9ffff;
-$dark: #777777;
-
+$primary: #4c99bf; //#79c7c5;
+$secondary: #4c99bf;
+$white: #ffffff; //#f9ffff;
+$dark: #322937; //#777777;
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #4c4c6a;
+  border-radius: 2px;
+}
 .msgContainer {
   position: relative;
   display: inline-block;
   width: 100%;
-
-  margin: 0 0 10px 0;
-  padding: 0;
+  // // padding: 0;
+  // margin: 0 0.2rem 0 0.2rem;
+  overflow: hidden;
 }
 
 .chatbox {
   position: relative;
-  left: 35%;
-  height: 75%;
-  width: 60%;
+  // left: 35%;
+  margin-left: auto;
   border-radius: 10px;
   box-shadow: 5px 5px 15px rgba($dark, 0.5);
-  width: 40vw;
+  width: 90vw;
   height: 80vh;
-  max-height: 80vh;
+  max-width: 500px;
+  // max-height: 80vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.modal {
+  position: fixed;
+  // margin: auto;
+  // width: 50%;
+  // background-color: aqua;
+  //padding: 1rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 30;
+
+  animation: slide-down 300ms ease-out forwards;
 }
 
 .topbar {
+  position: relative;
   width: 100%;
-  height: 60px;
+  height: 10%;
   background: $white;
   border-radius: 10px 10px 0 0;
 }
-
+.middle {
+  position: relative;
+  background: #eae7e7;
+  width: 100%;
+  opacity: 1;
+  // top: 60px;
+  // top: 10%;
+  font-family: "Montserrat", sans-serif;
+  // font-family: "Caladea", serif;
+  font-weight: 500;
+  word-spacing: 0.15ch;
+  line-height: 2.5ch;
+  height: 80%;
+  flex: auto;
+  max-height: calc(100% - 60px);
+  overflow: auto;
+  // scrollbar-width: none;
+}
+// .bottomscroll {
+//   position: relative;
+//   top: 100%;
+// }
+.bottombar {
+  position: relative;
+  width: 100%;
+  height: 10%;
+  bottom: 0;
+  background: $white;
+  border-radius: 0 0 10px 10px;
+}
 .avatar {
   width: 35px;
   height: 35px;
-  background: linear-gradient(to bottom left, $primary 20%, $secondary 100%);
+  background: linear-gradient(to bottom left, $primary 20%, #b0daff 100%);
   border-radius: 50%;
   position: absolute;
   top: 11px;
@@ -81,87 +134,66 @@ $dark: #777777;
   }
 }
 
-.middle {
-  position: absolute;
-  background: $white;
-  width: 100%;
-  opacity: 0.85;
-  top: 60px;
-  height: 80%;
-  flex: auto;
-  max-height: calc(100% - 60px);
-  overflow: auto;
+.bubble {
+  position: relative;
+  display: inline-block;
+  // margin-bottom: 5px;
+  color: $white;
+
+  padding: 10px 10px 10px 12px;
+  border-radius: 20px;
+
+  // font-size: 11pt;
+  // line-height: 18pt;
 }
 
 .incoming {
-  position: absolute;
+  position: relative;
   // width: 50%;
   // height: 100%;
   display: flex;
 
-  padding: 10px 10px 0 10px;
+  padding: 0.3rem;
   border-radius: 0 6px 6px 0;
   max-width: 80%;
   width: auto;
   float: left;
-  padding: 20px;
+  // padding: 20px;
   .bubble {
     background: lighten($dark, 23%);
   }
 }
 
-.typing {
-  position: absolute;
-  top: 67%;
-  left: 20px;
-  .bubble {
-    background: lighten($dark, 45%);
-    padding: 8px 13px 9px 13px;
-  }
-}
-
-.bubble {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 5px;
-  color: $white;
-  font-size: 0.7em;
-  padding: 10px 10px 10px 12px;
-  border-radius: 20px;
-
-  font-size: 11pt;
-  line-height: 13pt;
-}
+// .typing {
+//   position: absolute;
+//   top: 67%;
+//   left: 20px;
+//   .bubble {
+//     background: lighten($dark, 45%);
+//     // padding: 8px 13px 9px 13px;
+//   }
+// }
 
 // .lower {
 //   margin-top: 45px;
 // }
 
 .outgoing {
-  position: absolute;
-  padding: 20px;
+  position: relative;
+  // padding: 20px;
   right: 0;
-  top: 15%;
-  padding: 10px 10px 0 10px;
+  // top: 15%;
+  padding: 0.3rem;
   border-radius: 0 6px 6px 0;
   max-width: 80%;
   width: auto;
-  float: left;
+  float: right;
   // width: 50%;
   // height: 100%;
   .bubble {
     background: $primary;
     float: right;
   }
-}
-
-.bottombar {
-  position: absolute;
-  width: 100%;
-  height: 55px;
-  bottom: 0;
-  background: $white;
-  border-radius: 0 0 10px 10px;
 }
 
 .left {
@@ -175,6 +207,10 @@ $dark: #777777;
   position: absolute;
   border: 0;
   top: 13px;
+  font-family: "Montserrat", sans-serif;
+  // font-family: "Caladea", serif;
+  font-weight: 500;
+  font-size: 11pt;
   background: $white;
   color: $primary;
 }
@@ -198,10 +234,31 @@ $dark: #777777;
   right: 17px;
   cursor: pointer;
   outline: 0;
+  transform: scale(1.5);
+  background: #ffffff;
+  &:hover {
+    transform: scale(2);
+    transition: all 0.1s ease-in-out;
+    color: $primary;
+  }
+}
+.dots {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: $primary;
+  box-shadow: 0px 7px 0px $primary, 0px 14px 0px $primary;
+}
+.menu {
+  position: absolute;
+  right: 10px;
+  top: 20px;
+  width: 10px;
+  height: 20px;
+  cursor: pointer;
   &:hover {
     transform: scale(1.1);
-    transition: all 0.3s ease-in-out;
-    color: $primary;
+    transition: all 0.3s ease-in;
   }
 }
 
@@ -213,20 +270,6 @@ $dark: #777777;
   height: 100vh;
 
   background-color: rgba(0, 0, 0, 0.75);
-}
-
-.modal {
-  position: fixed;
-  top: 10vh;
-  left: 30%;
-  width: 40%;
-  // background-color: aqua;
-  //padding: 1rem;
-  border-radius: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-  z-index: 30;
-
-  animation: slide-down 300ms ease-out forwards;
 }
 
 @keyframes bounce {
@@ -321,25 +364,6 @@ $dark: #777777;
 //   font-size: 0.5em;
 //   margin-left: -30px;
 //   margin-top: 2px;
-// }
-// .menu {
-//   position: absolute;
-//   right: 10px;
-//   top: 20px;
-//   width: 10px;
-//   height: 20px;
-//   cursor: pointer;
-//   &:hover {
-//     transform: scale(1.1);
-//     transition: all 0.3s ease-in;
-//   }
-// }
-// .dots {
-//   width: 4px;
-//   height: 4px;
-//   border-radius: 50%;
-//   background-color: $primary;
-//   box-shadow: 0px 7px 0px $primary, 0px 14px 0px $primary;
 // }
 
 // .ellipsis {

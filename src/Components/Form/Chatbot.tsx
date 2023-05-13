@@ -9,7 +9,6 @@ import {
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 const Chatbot = ({
-  userInput,
   onFormChange,
   onFormSubmit,
   onFormClear,
@@ -21,7 +20,7 @@ const Chatbot = ({
     onFormChange(event.target.value);
   };
   const handleSubmit = (event: any) => {
-    //event.preventDefault();
+    event.preventDefault();
     onFormSubmit(userInputRef.current.value);
     userInputRef.current.value = "";
   };
@@ -34,40 +33,46 @@ const Chatbot = ({
 
   useEffect(() => {
     scrollToBottom();
+    console.log(data);
   }, [data]);
-  const formStyle = { width: "24px", height: "24px" };
-  const cell = data.map((item) => {
-    //console.log(todo.key);
-    // console.log(todo?.userInput?.length);
-    return (
-      <div key={item.key}>
-        {item?.userInput?.length && item?.userInput?.length > 0 ? (
-          <article className={`${styles.msgContainer} ${styles.msgSelf}`}>
-            <div className={styles.outgoing}>
-              <div className={styles.bubble}>{item.userInput}</div>
-            </div>
-          </article>
-        ) : (
-          <></>
-        )}
+  // const formStyle = { width: "24px", height: "24px" };
+  const cell = data ? (
+    data.map((item) => {
+      return (
+        <div key={item.key}>
+          {item?.userInput?.length && item?.userInput?.length > 0 ? (
+            <article className={styles.msgContainer}>
+              <div className={styles.outgoing}>
+                <div className={styles.bubble}>{item.userInput}</div>
+              </div>
+            </article>
+          ) : (
+            <></>
+          )}
 
-        {item?.response?.length == 0 ? (
-          <div className={styles.typing}>
-            <div className={styles.bubble}>
-              <TypingAnimation />
-            </div>
-          </div>
-        ) : (
-          <article className={`${styles.msgContainer} ${styles.msgSelf}`}>
-            <div className={styles.incoming}>
-              <div className={`${styles.bubble} `}>{item.response}</div>
-            </div>
-          </article>
-        )}
-      </div>
-    );
-  });
-  console.log(data);
+          {item?.response?.length && item?.response?.length > 0 ? (
+            <article className={styles.msgContainer}>
+              <div className={styles.incoming}>
+                <div className={`${styles.bubble} `}>{item.response}</div>
+              </div>
+            </article>
+          ) : data.indexOf(item) == data.length - 1 ? (
+            <article className={styles.msgContainer}>
+              <div className={styles.typing}>
+                <div className={styles.bubble}>
+                  <TypingAnimation />
+                </div>
+              </div>
+            </article>
+          ) : (
+            <></>
+          )}
+        </div>
+      );
+    })
+  ) : (
+    <></>
+  );
   return (
     <>
       <div className={`${styles.chatbox} ${styles.modal}`}>
@@ -78,7 +83,6 @@ const Chatbot = ({
           <div className={styles.name}>Morphy</div>
           <div className={styles.icons}>
             <FontAwesomeIcon icon={faPhone} className={styles.fas} />
-
             <FontAwesomeIcon icon={faVideo} className={styles.fas} />
           </div>
           <div className={styles.menu}>
@@ -90,24 +94,27 @@ const Chatbot = ({
           {/* <div className={styles.voldemort}> */}
           {cell}
 
+          <div ref={formRef}></div>
           {/* </div> */}
         </div>
         <div className={`${styles.bottombar} ${styles.chatinput}`}>
-          <div className={styles.chat}>
-            <input
-              type="text"
-              required
-              // value={userInput}
-              autoComplete="on"
-              placeholder="Type a message"
-              ref={userInputRef}
-              // style={{ textDecoration: "none" }}
-            />
+          <form onSubmit={handleSubmit}>
+            <div className={styles.chat}>
+              <input
+                type="text"
+                required
+                // value={userInput}
+                autoComplete="on"
+                placeholder="Type a message"
+                ref={userInputRef}
+                // style={{ textDecoration: "none" }}
+              />
 
-            <button onClick={handleSubmit}>
-              <FontAwesomeIcon icon={faPaperPlane} className={styles.fas} />
-            </button>
-          </div>
+              <button type="submit">
+                <FontAwesomeIcon icon={faPaperPlane} className={styles.fas} />
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </>
@@ -148,10 +155,10 @@ export interface Interaction {
   id: number;
   key: number;
   userInput: string;
-  response: string[];
+  response: string;
 }
 interface PropsForm {
-  userInput: any;
+  // userInput: any;
   onFormChange: any;
   onFormSubmit: any;
   onFormClear: any;
